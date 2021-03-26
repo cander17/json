@@ -1,0 +1,175 @@
+<html>
+<head>
+    <title>JSON setlist</title>
+</head>
+<body>
+
+<div id="serialize">
+    <h1>
+        Serialized String:
+    </h1>
+</div>
+
+<div id="title">
+    <h1>
+        <hr>
+        Pretty Print:
+    </h1>
+</div>
+<h1>
+    <hr>
+    Select Display:
+</h1>
+
+<!-- <div id ="song_info"></div> -->
+<p>
+<script>
+    var Songs =
+        [
+        {
+            "title" : "Livin on a Prayer",
+            "artist_name" : "Bon Jovi",
+            "genre" : "Rock",
+            "release_date" : "1986",
+        },
+        {
+            "title" : "We Found Love",
+            "artist_name" : "Rihanna",
+            "genre" : "Pop",
+            "release_date" : "2012",
+        },
+        {
+            "title" : "I Wanna Dance With Somebody",
+            "artist_name" : "Whitney Houston",
+            "genre" : "Pop",
+            "release_date" : "1987",
+        },
+        {
+            "title" : "Brazil",
+            "artist_name" : "Declan McKenna",
+            "genre" : "Indie",
+            "release_date" : "2014",
+        },
+        {
+            "title" : "The Sound",
+            "artist_name" : "The 1975",
+            "genre" : "Pop",
+            "release_date" : "2016",
+        },
+        {
+            "title" : "California Gurls",
+            "artist_name" : "Katy Perry",
+            "genre" : "Pop",
+            "release_date" : "2010",
+        },
+        {
+            "title" : "Please Don't Stop the Music",
+            "artist_name" : "Rihanna",
+            "genre" : "Pop",
+            "release_date" : "2007",
+        },
+        {
+            "title" : "She Moves in Her Own Way",
+            "artist_name" : "The Kooks",
+            "genre" : "Indie",
+            "release_date" : "2006",
+        },
+        {
+            "title" : "Harmony Hall",
+            "artist_name" : "Vampire Weekend",
+            "genre" : "Indie",
+            "release_date" : "2019",
+        },
+        {
+            "title" : "Nights",
+            "artist_name" : "Frank Ocean",
+            "genre" : "Pop",
+            "release_date" : "2016",
+        }
+        ]
+
+    /********* serialized string *********/
+    var songsString = JSON.stringify(Songs);
+    document.getElementById("serialize").innerHTML += songsString;
+
+
+    printSongs(Songs);
+
+    function printSongs(Songs)
+    {
+        for (var i in Songs) {
+            var title = Songs[i]["title"];
+            var name = Songs[i]["artist_name"];
+            var genre = Songs[i]["genre"];
+            var release_date = Songs[i]["release_date"];
+            document.getElementById("title").innerHTML += title.bold() + "<br>"
+                                                          + "Artist: ".italics()
+                                                          + name + "<br>"
+                                                          + "Genre: ".italics()
+                                                          + genre + "<br>"
+                                                          + "Release date: ".italics()
+                                                          + release_date
+                                                          + "<br><br><br";
+
+        }
+    }
+
+    function makeSelect()
+    {
+        var name = ""
+        var t= "";
+        t = "<select name='" + name + "' size='1'>";
+        genres = ["indie", "pop", "rock"]
+        for (j = 0; j < 3; j++) {
+            t += "<option>" + genres[j] + "</option>";
+            t+= "</select>";
+            return t;
+        }
+        filterDisplay(Songs, genres[j]);
+    }
+
+    function filterDisplay(Songs){
+        var selected_genre = document.display_genre.genre.value;
+        for (var i in Songs) {
+            var genre = Songs[i]["genre"];
+            if (genre === selected_genre) {
+                var title = Songs[i]["title"];
+                var name = Songs[i]["artist_name"];
+                var release_date = Songs[i]["release_date"];
+                document.getElementById("select").innerHTML += title.bold() + "<br>"
+                                                              + "artist: ".italics()
+                                                              + name + "<br>"
+                                                              + "genre: ".italics()
+                                                              + genre + "<br>"
+                                                              + "release date: ".italics()
+                                                              + release_date
+                                                              + "<br><br><br";
+            }
+
+        }
+    }
+
+    function clearDisplay() {
+        document.getElementById("select").innerHTML = "";
+    }
+
+</script>
+</p>
+<form name="display_genre">
+    <h2>Select which genre you would like displayed</h2>
+
+    <select name="genre" id="genre" onchange = clearDisplay()
+            style = "font-size: 20px; width: 70px; height: 40px;">
+        <option value="Rock">rock</option>
+        <option value="Pop">pop</option>
+        <option value="Indie">indie</option>
+    </select>
+    <input type = "button" style = "font-size: 20px; width: 70px;
+           height: 40px;" onclick="filterDisplay(Songs)"
+        id= "filter"
+        value="Filter">
+
+    </form>
+    <div id="select"></div>
+</body>
+</html>
